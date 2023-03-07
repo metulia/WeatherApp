@@ -8,6 +8,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.weatherapp.databinding.FragmentMainBinding
+import com.example.weatherapp.domain.AppState
+import com.example.weatherapp.domain.MainViewModel
 import com.google.android.material.snackbar.Snackbar
 
 class MainFragment : Fragment() {
