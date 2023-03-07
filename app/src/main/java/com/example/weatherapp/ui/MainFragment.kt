@@ -27,7 +27,6 @@ class MainFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentMainBinding.inflate(inflater, container, false)
-        //return inflater.inflate(R.layout.fragment_main, container, false)
         return binding.root
     }
 
@@ -66,7 +65,6 @@ class MainFragment : Fragment() {
                 binding.cityCoordinates.text =
                     "${data.weatherData.city.lat} ${data.weatherData.city.lon}"
                 Snackbar.make(binding.mainView, "Получилось", Snackbar.LENGTH_LONG).show()
-                //Toast.makeText(requireContext(), "Работает", Toast.LENGTH_SHORT).show()
             }
         }
     }
