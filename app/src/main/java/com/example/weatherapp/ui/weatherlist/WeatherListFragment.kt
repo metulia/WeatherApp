@@ -5,8 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.example.weatherapp.R
 import com.example.weatherapp.databinding.FragmentWeatherListBinding
 import com.example.weatherapp.domain.AppState
 import com.example.weatherapp.domain.MainViewModel
@@ -34,6 +36,8 @@ class WeatherListFragment : Fragment() {
         return binding.root
     }
 
+    var isRussian = true
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -49,6 +53,26 @@ class WeatherListFragment : Fragment() {
 
         viewModel.getData().observe(viewLifecycleOwner, observer)
 
+        binding.wlFloatingActionButton.setOnClickListener() {
+            isRussian = !isRussian
+            if (isRussian) {
+                viewModel.getWeatherRussia()
+                binding.wlFloatingActionButton.setImageDrawable(
+                    ContextCompat.getDrawable(
+                        requireContext(),
+                        R.drawable.ic_rus
+                    )
+                )
+            } else {
+                viewModel.getWeatherWorld()
+                binding.wlFloatingActionButton.setImageDrawable(
+                    ContextCompat.getDrawable(
+                        requireContext(),
+                        R.drawable.ic_world
+                    )
+                )
+            }
+        }
         viewModel.getWeatherRussia()
     }
 
