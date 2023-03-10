@@ -7,7 +7,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.weatherapp.databinding.FragmentWeatherListRecyclerItemBinding
 import com.example.weatherapp.domain.Weather
 
-class WeatherListAdapter(private var data: List<Weather> = listOf()) :
+class WeatherListAdapter(
+    private val onItemListClickListener: OnItemListClickListener,
+    private var data: List<Weather> = listOf()
+) :
     RecyclerView.Adapter<WeatherListAdapter.CityHolder>() {
 
     fun setData(dataNew: List<Weather>) {
@@ -33,11 +36,13 @@ class WeatherListAdapter(private var data: List<Weather> = listOf()) :
 
     override fun getItemCount() = data.size
 
-    class CityHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class CityHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(weather: Weather) {
             val binding = FragmentWeatherListRecyclerItemBinding.bind(itemView)
             binding.tvCityName.text = weather.city.name
+            binding.root.setOnClickListener {
+                onItemListClickListener.onItemClick(weather)
+            }
         }
-
     }
 }

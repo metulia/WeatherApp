@@ -12,16 +12,19 @@ import com.example.weatherapp.R
 import com.example.weatherapp.databinding.FragmentWeatherListBinding
 import com.example.weatherapp.domain.AppState
 import com.example.weatherapp.domain.MainViewModel
+import com.example.weatherapp.domain.Weather
+import com.example.weatherapp.ui.MainActivity
 import com.example.weatherapp.ui.details.DetailsFragment
+import com.example.weatherapp.utils.KEY_BUNDLE_WEATHER
 import com.google.android.material.snackbar.Snackbar
 
-class WeatherListFragment : Fragment() {
+class WeatherListFragment : Fragment(), OnItemListClickListener {
 
 
     private var _binding: FragmentWeatherListBinding? = null
     protected val binding get() = _binding!!
 
-    val adapter = WeatherListAdapter()
+    val adapter = WeatherListAdapter(this)
 
     override fun onDestroyView() {
         _binding = null
@@ -105,5 +108,13 @@ class WeatherListFragment : Fragment() {
     companion object {
         @JvmStatic
         fun newInstance() = WeatherListFragment()
+    }
+
+    override fun onItemClick(weather: Weather) {
+        val bundle = Bundle()
+        bundle.putParcelable(KEY_BUNDLE_WEATHER, weather)
+        requireActivity().supportFragmentManager.beginTransaction()
+            .add(R.id.container, DetailsFragment.newInstance(bundle)).addToBackStack("")
+            .commit()
     }
 }
