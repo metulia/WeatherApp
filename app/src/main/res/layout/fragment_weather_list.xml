@@ -17,9 +17,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:layout_margin="20dp"
+        android:layout_margin="@dimen/margin_20_dp"
         android:src="@drawable/ic_rus"
-        app:maxImageSize="56dp"
+        app:maxImageSize="@dimen/max_image_size"
         app:tint="@null"/>
 
     <FrameLayout

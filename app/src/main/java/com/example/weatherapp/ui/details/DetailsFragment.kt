@@ -41,7 +41,7 @@ class DetailsFragment : Fragment() {
         binding.temperatureValue.text = weather.temperature.toString()
         binding.feelsLikeValue.text = weather.feelsLike.toString()
         binding.cityCoordinates.text =
-            "$weather.city.lat $weather.city.lon"
+            "${weather.city.lat} ${weather.city.lon}"
         Snackbar.make(binding.mainView, "Получилось", Snackbar.LENGTH_LONG).show()
     }
 
