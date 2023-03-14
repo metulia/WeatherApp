@@ -11,9 +11,9 @@ import com.example.weatherapp.R
 import com.example.weatherapp.databinding.FragmentWeatherListBinding
 import com.example.weatherapp.domain.OnItemListClickListener
 import com.example.weatherapp.domain.Weather
-import com.example.weatherapp.ui.MainViewModel
 import com.example.weatherapp.ui.details.DetailsFragment
 import com.example.weatherapp.ui.details.DetailsFragment.Companion.KEY_BUNDLE_WEATHER
+import com.example.weatherapp.ui.main.MainViewModel
 import com.google.android.material.snackbar.Snackbar
 
 class WeatherListFragment : Fragment(), OnItemListClickListener {

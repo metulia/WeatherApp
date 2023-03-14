@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.weatherapp.databinding.FragmentDetailsBinding
 import com.example.weatherapp.domain.Weather
-import com.google.android.material.snackbar.Snackbar
 
 class DetailsFragment : Fragment() {
 

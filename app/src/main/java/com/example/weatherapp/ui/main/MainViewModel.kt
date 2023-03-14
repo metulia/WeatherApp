@@ -1,4 +1,4 @@
-package com.example.weatherapp.ui
+package com.example.weatherapp.ui.main
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -24,13 +24,13 @@ class MainViewModel(
 
                 postValue(WeatherListFragmentRequestResult.Loading)
 
-                if(true) {
+                try {
                     val answer = if (isRussian) repositoryImpl.getRussianWeatherFromLocalStorage()
                     else repositoryImpl.getWorldWeatherFromLocalStorage()
                     postValue(WeatherListFragmentRequestResult.Success(answer))
+                } catch (e: java.lang.Exception) {
+                    postValue(WeatherListFragmentRequestResult.Error(IllegalAccessException()))
                 }
-                else
-                postValue(WeatherListFragmentRequestResult.Error(IllegalAccessException()))
             }
         }.start()
     }
