@@ -8,7 +8,7 @@ import com.example.weatherapp.ui.weatherlist.WeatherListFragmentRequestResult
 
 class MainViewModel(
     private val liveData: MutableLiveData<WeatherListFragmentRequestResult> = MutableLiveData(),
-    private val repository: RepositoryImpl = RepositoryImpl()
+    private val repositoryImpl: RepositoryImpl = RepositoryImpl()
 ) :
     ViewModel() {
     fun getData(): LiveData<WeatherListFragmentRequestResult> {
@@ -20,15 +20,18 @@ class MainViewModel(
 
     private fun getWeather(isRussian: Boolean) {
         Thread {
-            liveData.postValue(WeatherListFragmentRequestResult.Loading)
+            with(liveData) {
 
-            //if ((0..10).random() > 0) {
-            if (true) {
-                val answer = if (isRussian) repository.getRussianWeatherFromLocalStorage()
-                else repository.getWorldWeatherFromLocalStorage()
-                liveData.postValue(WeatherListFragmentRequestResult.Success(answer))
-            } else
-                liveData.postValue(WeatherListFragmentRequestResult.Error(IllegalAccessException()))
+                postValue(WeatherListFragmentRequestResult.Loading)
+
+                if(true) {
+                    val answer = if (isRussian) repositoryImpl.getRussianWeatherFromLocalStorage()
+                    else repositoryImpl.getWorldWeatherFromLocalStorage()
+                    postValue(WeatherListFragmentRequestResult.Success(answer))
+                }
+                else
+                postValue(WeatherListFragmentRequestResult.Error(IllegalAccessException()))
+            }
         }.start()
     }
 }

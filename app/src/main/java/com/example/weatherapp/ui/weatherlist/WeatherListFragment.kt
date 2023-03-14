@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.weatherapp.R
 import com.example.weatherapp.databinding.FragmentWeatherListBinding
@@ -14,7 +13,7 @@ import com.example.weatherapp.domain.OnItemListClickListener
 import com.example.weatherapp.domain.Weather
 import com.example.weatherapp.ui.MainViewModel
 import com.example.weatherapp.ui.details.DetailsFragment
-import com.example.weatherapp.utils.KEY_BUNDLE_WEATHER
+import com.example.weatherapp.ui.details.DetailsFragment.Companion.KEY_BUNDLE_WEATHER
 import com.google.android.material.snackbar.Snackbar
 
 class WeatherListFragment : Fragment(), OnItemListClickListener {
@@ -22,7 +21,7 @@ class WeatherListFragment : Fragment(), OnItemListClickListener {
     private var _binding: FragmentWeatherListBinding? = null
     protected val binding get() = _binding!!
 
-    val adapter = WeatherListAdapter(this)
+    private val adapter = WeatherListAdapter(this)
 
     override fun onDestroyView() {
         _binding = null
@@ -32,56 +31,58 @@ class WeatherListFragment : Fragment(), OnItemListClickListener {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentWeatherListBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     var isRussian = true
 
+    private val viewModel: MainViewModel by lazy {
+        ViewModelProvider(this)[MainViewModel::class.java]
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-
-        val observer = object : Observer<WeatherListFragmentRequestResult> {
-            override fun onChanged(data: WeatherListFragmentRequestResult) {
-                renderData(data)
-            }
-        }
-
+        val observer = { data: WeatherListFragmentRequestResult -> renderData(data) }
         binding.recyclerView.adapter = adapter
-
         viewModel.getData().observe(viewLifecycleOwner, observer)
 
-        binding.wlFloatingActionButton.setOnClickListener() {
-            isRussian = !isRussian
-            if (isRussian) {
-                viewModel.getWeatherRussia()
-                binding.wlFloatingActionButton.setImageDrawable(
-                    ContextCompat.getDrawable(
-                        requireContext(),
-                        R.drawable.ic_rus
+        setupWlFloatingActionButton()
+
+        viewModel.getWeatherRussia()
+    }
+
+    private fun setupWlFloatingActionButton() {
+        with(binding.wlFloatingActionButton) {
+            setOnClickListener() {
+                isRussian = !isRussian
+                if (isRussian) {
+                    viewModel.getWeatherRussia()
+                    setImageDrawable(
+                        ContextCompat.getDrawable(
+                            requireContext(),
+                            R.drawable.ic_rus
+                        )
                     )
-                )
-            } else {
-                viewModel.getWeatherWorld()
-                binding.wlFloatingActionButton.setImageDrawable(
-                    ContextCompat.getDrawable(
-                        requireContext(),
-                        R.drawable.ic_world
+                } else {
+                    viewModel.getWeatherWorld()
+                    setImageDrawable(
+                        ContextCompat.getDrawable(
+                            requireContext(),
+                            R.drawable.ic_world
+                        )
                     )
-                )
+                }
             }
         }
-        viewModel.getWeatherRussia()
     }
 
     private fun renderData(data: WeatherListFragmentRequestResult) {
         when (data) {
             is WeatherListFragmentRequestResult.Error -> {
                 binding.loadingLayout.visibility = View.GONE
-                //binding.message.text = "Не получилось ${data.error}"
                 Snackbar.make(binding.root, "Не получилось ${data.error}", Snackbar.LENGTH_LONG)
                     .show()
             }
@@ -91,14 +92,6 @@ class WeatherListFragment : Fragment(), OnItemListClickListener {
             is WeatherListFragmentRequestResult.Success -> {
                 binding.loadingLayout.visibility = View.GONE
                 adapter.setData(data.weatherListData)
-
-                /*
-                binding.cityName.text = data.weatherData.city.name
-                binding.temperatureValue.text = data.weatherData.temperature.toString()
-                binding.feelsLikeValue.text = data.weatherData.feelsLike.toString()
-                binding.cityCoordinates.text =
-                    "$data.weatherData.city.lat $data.weatherData.city.lon"
-                Snackbar.make(binding.mainView, "Получилось", Snackbar.LENGTH_LONG).show()*/
             }
         }
     }
@@ -109,10 +102,9 @@ class WeatherListFragment : Fragment(), OnItemListClickListener {
     }
 
     override fun onItemClick(weather: Weather) {
-        val bundle = Bundle()
-        bundle.putParcelable(KEY_BUNDLE_WEATHER, weather)
         requireActivity().supportFragmentManager.beginTransaction()
-            .add(R.id.container, DetailsFragment.newInstance(bundle)).addToBackStack("")
-            .commit()
+            .add(R.id.container, DetailsFragment.newInstance(Bundle().apply {
+                putParcelable(KEY_BUNDLE_WEATHER, weather)
+            })).addToBackStack("").commit()
     }
 }
