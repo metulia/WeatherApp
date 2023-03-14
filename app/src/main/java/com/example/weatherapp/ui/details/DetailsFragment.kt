@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.weatherapp.databinding.FragmentDetailsBinding
 import com.example.weatherapp.domain.Weather
+import com.google.android.material.snackbar.Snackbar
 
 class DetailsFragment : Fragment() {
 
@@ -41,12 +42,15 @@ class DetailsFragment : Fragment() {
             feelsLikeValue.text = weather.feelsLike.toString()
             cityCoordinates.text =
                 "${weather.city.lat} ${weather.city.lon}"
-            mainView.showSnackBar()
+            mainView.showSnackBar("Получилось", Snackbar.LENGTH_LONG)
         }
     }
 
-    private fun View.showSnackBar() {
-
+    private fun View.showSnackBar(
+        text: String,
+        length: Int = Snackbar.LENGTH_INDEFINITE
+    ) {
+        Snackbar.make(this, text, length).show()
     }
 
     companion object {

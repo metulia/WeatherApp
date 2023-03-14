@@ -32,7 +32,7 @@ class WeatherListAdapter(
     }
 
     override fun onBindViewHolder(holder: CityHolder, position: Int) {
-        holder.bind(data.get(position))
+        holder.bind(data[position])
     }
 
     override fun getItemCount() = data.size
