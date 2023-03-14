@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.weatherapp.databinding.FragmentDetailsBinding
 import com.example.weatherapp.domain.Weather
-import com.example.weatherapp.utils.KEY_BUNDLE_WEATHER
 import com.google.android.material.snackbar.Snackbar
 
 class DetailsFragment : Fragment() {
@@ -46,6 +45,9 @@ class DetailsFragment : Fragment() {
     }
 
     companion object {
+
+        const val KEY_BUNDLE_WEATHER = "key"
+
         @JvmStatic
         fun newInstance(bundle: Bundle): DetailsFragment {
             val fragment = DetailsFragment()

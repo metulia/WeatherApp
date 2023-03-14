@@ -1,25 +1,23 @@
 package com.example.weatherapp.ui.weatherlist
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.weatherapp.R
 import com.example.weatherapp.databinding.FragmentWeatherListBinding
-import com.example.weatherapp.domain.AppState
-import com.example.weatherapp.domain.MainViewModel
+import com.example.weatherapp.domain.OnItemListClickListener
 import com.example.weatherapp.domain.Weather
-import com.example.weatherapp.ui.MainActivity
+import com.example.weatherapp.ui.MainViewModel
 import com.example.weatherapp.ui.details.DetailsFragment
 import com.example.weatherapp.utils.KEY_BUNDLE_WEATHER
 import com.google.android.material.snackbar.Snackbar
 
 class WeatherListFragment : Fragment(), OnItemListClickListener {
-
 
     private var _binding: FragmentWeatherListBinding? = null
     protected val binding get() = _binding!!
@@ -46,8 +44,8 @@ class WeatherListFragment : Fragment(), OnItemListClickListener {
 
         val viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
-        val observer = object : Observer<AppState> {
-            override fun onChanged(data: AppState) {
+        val observer = object : Observer<WeatherListFragmentRequestResult> {
+            override fun onChanged(data: WeatherListFragmentRequestResult) {
                 renderData(data)
             }
         }
@@ -79,18 +77,18 @@ class WeatherListFragment : Fragment(), OnItemListClickListener {
         viewModel.getWeatherRussia()
     }
 
-    private fun renderData(data: AppState) {
+    private fun renderData(data: WeatherListFragmentRequestResult) {
         when (data) {
-            is AppState.Error -> {
+            is WeatherListFragmentRequestResult.Error -> {
                 binding.loadingLayout.visibility = View.GONE
                 //binding.message.text = "Не получилось ${data.error}"
                 Snackbar.make(binding.root, "Не получилось ${data.error}", Snackbar.LENGTH_LONG)
                     .show()
             }
-            is AppState.Loading -> {
+            is WeatherListFragmentRequestResult.Loading -> {
                 binding.loadingLayout.visibility = View.VISIBLE
             }
-            is AppState.Success -> {
+            is WeatherListFragmentRequestResult.Success -> {
                 binding.loadingLayout.visibility = View.GONE
                 adapter.setData(data.weatherListData)
 
