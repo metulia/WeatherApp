@@ -1,6 +1,4 @@
-package com.example.weatherapp.data.repository
-
-import com.example.weatherapp.domain.Weather
+package com.example.weatherapp.domain
 
 interface Repository {
 
