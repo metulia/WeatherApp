@@ -46,7 +46,7 @@ class DetailsFragment : Fragment() {
         }
     }
 
-    private fun View.showSnackBar(
+    fun View.showSnackBar(
         text: String,
         length: Int = Snackbar.LENGTH_INDEFINITE
     ) {
