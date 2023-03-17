@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.weatherapp.data.repository.OnServerResponse
+import com.example.weatherapp.domain.OnServerResponse
 import com.example.weatherapp.data.weather_dto.WeatherDTO
 import com.example.weatherapp.data.repository.WeatherLoader
 import com.example.weatherapp.databinding.FragmentDetailsBinding
