@@ -3,6 +3,7 @@ package com.example.weatherapp.data.repository
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import com.example.weatherapp.data.weather_dto.WeatherDTO
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
 import java.io.BufferedReader

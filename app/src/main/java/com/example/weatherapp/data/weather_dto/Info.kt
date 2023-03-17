@@ -1,4 +1,4 @@
-package com.example.weatherapp.data.repository
+package com.example.weatherapp.data.weather_dto
 
 data class Info(
     val lat: Double,

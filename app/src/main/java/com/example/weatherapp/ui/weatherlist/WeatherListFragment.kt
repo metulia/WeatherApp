@@ -13,6 +13,7 @@ import com.example.weatherapp.domain.OnItemListClickListener
 import com.example.weatherapp.domain.Weather
 import com.example.weatherapp.ui.details.DetailsFragment
 import com.example.weatherapp.ui.details.DetailsFragment.Companion.KEY_BUNDLE_WEATHER
+import com.example.weatherapp.ui.extention.view.showSnackBar
 import com.example.weatherapp.ui.main.MainViewModel
 import com.google.android.material.snackbar.Snackbar
 
@@ -83,8 +84,7 @@ class WeatherListFragment : Fragment(), OnItemListClickListener {
         when (data) {
             is WeatherListFragmentRequestResult.Error -> {
                 binding.loadingLayout.visibility = View.GONE
-                Snackbar.make(binding.root, "Не получилось ${data.error}", Snackbar.LENGTH_LONG)
-                    .show()
+                binding.root.showSnackBar("Не получилось ${data.error}", Snackbar.LENGTH_LONG)
             }
             is WeatherListFragmentRequestResult.Loading -> {
                 binding.loadingLayout.visibility = View.VISIBLE
