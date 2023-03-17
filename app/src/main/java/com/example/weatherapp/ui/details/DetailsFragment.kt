@@ -5,14 +5,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.example.weatherapp.data.repository.OnServerResponse
+import com.example.weatherapp.data.repository.WeatherDTO
+import com.example.weatherapp.data.repository.WeatherLoader
 import com.example.weatherapp.databinding.FragmentDetailsBinding
 import com.example.weatherapp.domain.Weather
 import com.google.android.material.snackbar.Snackbar
 
-class DetailsFragment : Fragment() {
+class DetailsFragment : Fragment(), OnServerResponse {
 
     private var _binding: FragmentDetailsBinding? = null
-    protected val binding get() = _binding!!
+    private val binding get() = _binding!!
 
     override fun onDestroyView() {
         _binding = null
@@ -27,26 +30,28 @@ class DetailsFragment : Fragment() {
         return binding.root
     }
 
+    lateinit var currentCityName: String
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         arguments?.getParcelable<Weather>(KEY_BUNDLE_WEATHER)?.let {
-            renderData(it)
+            currentCityName = it.city.name
+            WeatherLoader(this@DetailsFragment).loadWeather(it.city.lat, it.city.lon)
         }
     }
 
-    private fun renderData(weather: Weather) {
+    private fun renderData(weather: WeatherDTO) {
         with(binding) {
             loadingLayout.visibility = View.GONE
-            cityName.text = weather.city.name
-            temperatureValue.text = weather.temperature.toString()
-            feelsLikeValue.text = weather.feelsLike.toString()
+            cityName.text = currentCityName
+            temperatureValue.text = weather.fact.temp.toString()
+            feelsLikeValue.text = weather.fact.feels_like.toString()
             cityCoordinates.text =
-                "${weather.city.lat} ${weather.city.lon}"
+                "${weather.info.lat} ${weather.info.lon}"
             mainView.showSnackBar("Получилось", Snackbar.LENGTH_LONG)
         }
     }
 
-    fun View.showSnackBar(
+    private fun View.showSnackBar(
         text: String,
         length: Int = Snackbar.LENGTH_INDEFINITE
     ) {
@@ -63,5 +68,9 @@ class DetailsFragment : Fragment() {
             fragment.arguments = bundle
             return fragment
         }
+    }
+
+    override fun onResponse(weatherDTO: WeatherDTO) {
+        renderData(weatherDTO)
     }
 }

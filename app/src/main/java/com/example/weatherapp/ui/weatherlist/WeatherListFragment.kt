@@ -19,7 +19,7 @@ import com.google.android.material.snackbar.Snackbar
 class WeatherListFragment : Fragment(), OnItemListClickListener {
 
     private var _binding: FragmentWeatherListBinding? = null
-    protected val binding get() = _binding!!
+    private val binding get() = _binding!!
 
     private val adapter = WeatherListAdapter(this)
 

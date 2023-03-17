@@ -1,6 +1,6 @@
 package com.example.weatherapp.data.repository
 
-data class FactDTO(
+data class Fact(
     val condition: String,
     val daytime: String,
     val feels_like: Int,
@@ -14,5 +14,5 @@ data class FactDTO(
     val temp: Int,
     val wind_dir: String,
     val wind_gust: Double,
-    val wind_speed: Int
+    val wind_speed: Double
 )

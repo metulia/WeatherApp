@@ -1,9 +1,9 @@
 package com.example.weatherapp.data.repository
 
 data class WeatherDTO(
-    val factDTO: FactDTO,
-    val forecastDTO: ForecastDTO,
-    val infoDTO: InfoDTO,
+    val fact: Fact,
+    val forecast: Forecast,
+    val info: Info,
     val now: Int,
     val now_dt: String
 )

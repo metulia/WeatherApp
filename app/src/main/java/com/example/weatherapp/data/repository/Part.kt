@@ -1,6 +1,6 @@
 package com.example.weatherapp.data.repository
 
-data class PartDTO(
+data class Part(
     val condition: String,
     val daytime: String,
     val feels_like: Int,
