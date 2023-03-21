@@ -43,7 +43,6 @@ class DetailsService(val name: String = "DetailService") : IntentService(name) {
                 val responseCode = urlConnection.responseCode
                 val buffer = BufferedReader(InputStreamReader(urlConnection.inputStream))
                 val weatherDTO: WeatherDTO = Gson().fromJson(buffer, WeatherDTO::class.java)
-
                 val message = Intent(KEY_WEATHER_WAVE)
                 message.putExtra(KEY_BUNDLE_SERVICE_BROADCAST_WEATHER, weatherDTO)
                 LocalBroadcastManager.getInstance(this).sendBroadcast(message)
