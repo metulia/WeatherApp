@@ -1,5 +1,9 @@
 package com.example.weatherapp.data.weather_dto
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class Forecast(
     val date: String,
     val date_ts: Int,
@@ -9,4 +13,4 @@ data class Forecast(
     val sunrise: String,
     val sunset: String,
     val week: Int
-)
+):Parcelable
