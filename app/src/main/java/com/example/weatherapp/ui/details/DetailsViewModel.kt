@@ -23,13 +23,18 @@ open class DetailsViewModel
                 override fun onResponse(weather: Weather) {
                     liveData.postValue(DetailsFragmentRequestResult.Success(weather))
                 }
+
+                override fun onFail(error: Throwable) {
+                    liveData.postValue((DetailsFragmentRequestResult.Error(Throwable())))
+                }
             })
     }
 
     interface Callback {
         fun onResponse(weather: Weather) {
-//TODO  fail
         }
+
+        fun onFail(error: Throwable)
     }
 
 }

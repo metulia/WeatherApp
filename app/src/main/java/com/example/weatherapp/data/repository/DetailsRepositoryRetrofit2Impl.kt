@@ -38,6 +38,7 @@ class DetailsRepositoryRetrofit2Impl : DetailsRepository {
                 }
 
                 override fun onFailure(call: Call<WeatherDTO>, t: Throwable) {
+                    callbackMy.onFail(Throwable(t.message ?: "REQUEST_ERROR"))
                     Log.d("@@@", "Error" + t.message)
                 }
 

@@ -51,8 +51,11 @@ class DetailsFragment : Fragment() {
 
     fun renderData(detailsFragmentRequestResult: DetailsFragmentRequestResult) {
         when (detailsFragmentRequestResult) {
-            is DetailsFragmentRequestResult.Error -> binding.loadingLayout.visibility =
-                View.GONE
+            is DetailsFragmentRequestResult.Error -> {
+                binding.loadingLayout.visibility =
+                    View.GONE
+                binding.mainView.showSnackBar("Не удалось загрузить данные", Snackbar.LENGTH_LONG)
+            }
             is DetailsFragmentRequestResult.Loading -> binding.loadingLayout.visibility =
                 View.VISIBLE
             is DetailsFragmentRequestResult.Success -> {
