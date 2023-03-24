@@ -8,9 +8,9 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.weatherapp.R
+import com.example.weatherapp.data.repository.Weather
 import com.example.weatherapp.databinding.FragmentWeatherListBinding
 import com.example.weatherapp.domain.OnItemListClickListener
-import com.example.weatherapp.domain.Weather
 import com.example.weatherapp.ui.details.DetailsFragment
 import com.example.weatherapp.ui.details.DetailsFragment.Companion.KEY_BUNDLE_WEATHER
 import com.example.weatherapp.ui.extention.view.showSnackBar

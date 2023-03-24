@@ -20,7 +20,7 @@ const val KEY_EXTRA_LON = "lon"
 const val KEY_BUNDLE_SERVICE_BROADCAST_WEATHER = "weather_s_b"
 const val KEY_WEATHER_WAVE = "weather_wave"
 const val YANDEX_DOMAIN = "https://api.weather.yandex.ru/"
-const val YANDEX_PATH = "v2/informers?"
+const val YANDEX_ENDPOINT = "v2/informers?"
 
 class DetailsService(val name: String = "DetailService") : IntentService(name) {
     override fun onHandleIntent(intent: Intent?) {
@@ -29,7 +29,7 @@ class DetailsService(val name: String = "DetailService") : IntentService(name) {
             val lon = it.getDoubleExtra(KEY_EXTRA_LON, 0.0)
             Log.d("@@@", "work DetailsService $lat $lon")
 
-            val urlText = "$YANDEX_DOMAIN${YANDEX_PATH}lat=${lat}&lon=${lon}"
+            val urlText = "$YANDEX_DOMAIN${YANDEX_ENDPOINT}lat=${lat}&lon=${lon}"
             val uri = URL(urlText)
             val urlConnection: HttpsURLConnection =
                 (uri.openConnection() as HttpsURLConnection).apply {
@@ -48,6 +48,7 @@ class DetailsService(val name: String = "DetailService") : IntentService(name) {
                 LocalBroadcastManager.getInstance(this).sendBroadcast(message)
             } catch (e: JsonSyntaxException) {
                 Log.d("mylogs", "Ошибка JsonSyntax")
+
             } catch (e: FileNotFoundException) {
                 Log.d("mylogs", "Ошибка FileNotFound")
             } finally {

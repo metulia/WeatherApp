@@ -1,6 +1,7 @@
-package com.example.weatherapp.domain
+package com.example.weatherapp.data.repository
 
 import android.os.Parcelable
+import com.example.weatherapp.data.repository.City
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
