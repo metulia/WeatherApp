@@ -1,6 +1,6 @@
 package com.example.weatherapp.ui.weatherlist
 
-import com.example.weatherapp.domain.Weather
+import com.example.weatherapp.data.repository.Weather
 
 sealed class WeatherListFragmentRequestResult {
 

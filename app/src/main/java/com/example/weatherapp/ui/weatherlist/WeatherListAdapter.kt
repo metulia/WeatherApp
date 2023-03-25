@@ -4,9 +4,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.weatherapp.data.repository.Weather
 import com.example.weatherapp.databinding.FragmentWeatherListRecyclerItemBinding
 import com.example.weatherapp.domain.OnItemListClickListener
-import com.example.weatherapp.domain.Weather
 
 class WeatherListAdapter(
     private val onItemListClickListener: OnItemListClickListener,

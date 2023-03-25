@@ -1,23 +1,22 @@
 package com.example.weatherapp.ui.details
 
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import com.example.weatherapp.data.weather_dto.WeatherDTO
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import coil.load
+import com.example.weatherapp.R
+import com.example.weatherapp.data.repository.Weather
 import com.example.weatherapp.databinding.FragmentDetailsBinding
-import com.example.weatherapp.domain.OnServerResponse
-import com.example.weatherapp.domain.Weather
+import com.example.weatherapp.ui.extention.view.loadSvg
 import com.example.weatherapp.ui.extention.view.showSnackBar
 import com.google.android.material.snackbar.Snackbar
+import com.squareup.picasso.Picasso
 
-class DetailsFragment : Fragment(), OnServerResponse {
+class DetailsFragment : Fragment() {
 
     private var _binding: FragmentDetailsBinding? = null
     private val binding get() = _binding!!
@@ -25,16 +24,6 @@ class DetailsFragment : Fragment(), OnServerResponse {
     override fun onDestroyView() {
         _binding = null
         super.onDestroyView()
-        LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(receiver)
-    }
-
-    private val receiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context?, intent: Intent?) {
-            intent?.let {
-                it.getParcelableExtra<WeatherDTO>(KEY_BUNDLE_SERVICE_BROADCAST_WEATHER)
-                    ?.let { it1 -> onResponse(it1) }
-            }
-        }
     }
 
     override fun onCreateView(
@@ -45,45 +34,64 @@ class DetailsFragment : Fragment(), OnServerResponse {
         return binding.root
     }
 
-    private lateinit var currentCityName: String
+    private val viewModel: DetailsViewModel by lazy {
+        ViewModelProvider(this)[DetailsViewModel::class.java]
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        LocalBroadcastManager.getInstance(requireContext()).registerReceiver(
-            receiver, IntentFilter(
-                KEY_WEATHER_WAVE
-            )
-        )
+        viewModel.getLiveData()
+            .observe(viewLifecycleOwner, object : Observer<DetailsFragmentRequestResult> {
+                override fun onChanged(t: DetailsFragmentRequestResult) {
+                    renderData(t)
+                }
+            })
+
         arguments?.getParcelable<Weather>(KEY_BUNDLE_WEATHER)?.let {
-            currentCityName = it.city.name
-            //WeatherLoader(this@DetailsFragment).loadWeather(it.city.lat, it.city.lon)
-            requireActivity().startService(
-                Intent(
-                    requireContext(),
-                    DetailsService::class.java
-                ).apply {
-                    putExtra(KEY_EXTRA_LAT, it.city.lat)
-                    putExtra(KEY_EXTRA_LON, it.city.lon)
-                })
+            viewModel.getWeather(it.city)
         }
     }
 
-    private fun renderData(weather: WeatherDTO) {
-        with(binding) {
-            loadingLayout.visibility = View.GONE
-            cityName.text = currentCityName
-            temperatureValue.text = weather.fact.temp.toString()
-            feelsLikeValue.text = weather.fact.feels_like.toString()
-            cityCoordinates.text =
-                "${weather.info.lat} ${weather.info.lon}"
-            mainView.showSnackBar("Получилось", Snackbar.LENGTH_LONG)
+    fun renderData(detailsFragmentRequestResult: DetailsFragmentRequestResult) {
+        when (detailsFragmentRequestResult) {
+            is DetailsFragmentRequestResult.Error -> {
+                binding.loadingLayout.visibility = View.GONE
+                binding.mainView.showSnackBar(
+                    getString(R.string.error), Snackbar.LENGTH_LONG
+                )
+            }
+            is DetailsFragmentRequestResult.Loading -> {
+                binding.loadingLayout.visibility = View.VISIBLE
+                binding.mainView.showSnackBar(getString(R.string.load), Snackbar.LENGTH_LONG)
+            }
+            is DetailsFragmentRequestResult.Success -> {
+                val weather = detailsFragmentRequestResult.weather
+                with(binding) {
+                    loadingLayout.visibility = View.GONE
+                    cityName.text = weather.city.name
+                    temperatureValue.text = weather.temperature.toString()
+                    feelsLikeValue.text = weather.feelsLike.toString()
+                    cityCoordinates.text =
+                        "${weather.city.lat} ${weather.city.lon}"
+                    //headerIcon.load("https://freepngimg.com/thumb/city/36275-3-city-hd.png") // coil
+                    Picasso.get().load("https://freepngimg.com/thumb/city/36275-3-city-hd.png")
+                        .into(headerIcon)
+                    weatherIcon.loadSvg("https://yastatic.net/weather/i/icons/blueye/color/svg/${weather.icon}.svg")
+                    mainView.showSnackBar(getString(R.string.ok), Snackbar.LENGTH_LONG)
+                }
+            }
         }
     }
 
     companion object {
 
         const val KEY_BUNDLE_WEATHER = "weather"
+        const val YANDEX_API_KEY = "X-Yandex-API-Key"
+        const val KEY_EXTRA_LAT = "lat"
+        const val KEY_EXTRA_LON = "lon"
+        const val YANDEX_DOMAIN = "https://api.weather.yandex.ru/"
+        const val YANDEX_ENDPOINT = "v2/informers?"
 
         @JvmStatic
         fun newInstance(bundle: Bundle): DetailsFragment {
@@ -91,9 +99,5 @@ class DetailsFragment : Fragment(), OnServerResponse {
             fragment.arguments = bundle
             return fragment
         }
-    }
-
-    override fun onResponse(weatherDTO: WeatherDTO) {
-        renderData(weatherDTO)
     }
 }
