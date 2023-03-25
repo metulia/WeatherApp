@@ -5,8 +5,8 @@ import com.example.weatherapp.BuildConfig
 import com.example.weatherapp.data.weather_dto.Fact
 import com.example.weatherapp.data.weather_dto.WeatherDTO
 import com.example.weatherapp.domain.DetailsRepository
+import com.example.weatherapp.ui.details.DetailsFragment.Companion.YANDEX_DOMAIN
 import com.example.weatherapp.ui.details.DetailsViewModel
-import com.example.weatherapp.ui.details.YANDEX_DOMAIN
 import com.google.gson.GsonBuilder
 import retrofit2.Call
 import retrofit2.Callback

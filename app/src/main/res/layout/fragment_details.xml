@@ -44,6 +44,16 @@
             app:layout_constraintTop_toBottomOf="@+id/city_name"
             tools:text="lt/ln: 55.755826, 37.617299900000035" />
 
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/weather_icon"
+            android:layout_width="@dimen/weather_icon_width"
+            android:layout_height="@dimen/weather_icon_height"
+            android:layout_marginTop="12dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/city_coordinates" />
+
         <TextView
             android:id="@+id/temperature_label"
             android:layout_width="wrap_content"
@@ -52,7 +62,7 @@
             android:text="@string/temperature_label"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/city_coordinates" />
+            app:layout_constraintTop_toBottomOf="@+id/weather_icon" />
 
         <TextView
             android:id="@+id/temperature_value"

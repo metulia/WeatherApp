@@ -6,9 +6,9 @@ import android.util.Log
 import com.example.weatherapp.BuildConfig
 import com.example.weatherapp.data.weather_dto.WeatherDTO
 import com.example.weatherapp.domain.OnServerResponse
-import com.example.weatherapp.ui.details.YANDEX_API_KEY
-import com.example.weatherapp.ui.details.YANDEX_DOMAIN
-import com.example.weatherapp.ui.details.YANDEX_ENDPOINT
+import com.example.weatherapp.ui.details.DetailsFragment.Companion.YANDEX_API_KEY
+import com.example.weatherapp.ui.details.DetailsFragment.Companion.YANDEX_DOMAIN
+import com.example.weatherapp.ui.details.DetailsFragment.Companion.YANDEX_ENDPOINT
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
 import java.io.BufferedReader

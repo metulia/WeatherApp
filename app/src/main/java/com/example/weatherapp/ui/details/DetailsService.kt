@@ -6,6 +6,11 @@ import android.util.Log
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.example.weatherapp.BuildConfig
 import com.example.weatherapp.data.weather_dto.WeatherDTO
+import com.example.weatherapp.ui.details.DetailsFragment.Companion.KEY_EXTRA_LAT
+import com.example.weatherapp.ui.details.DetailsFragment.Companion.KEY_EXTRA_LON
+import com.example.weatherapp.ui.details.DetailsFragment.Companion.YANDEX_API_KEY
+import com.example.weatherapp.ui.details.DetailsFragment.Companion.YANDEX_DOMAIN
+import com.example.weatherapp.ui.details.DetailsFragment.Companion.YANDEX_ENDPOINT
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
 import java.io.BufferedReader
@@ -14,13 +19,8 @@ import java.io.InputStreamReader
 import java.net.URL
 import javax.net.ssl.HttpsURLConnection
 
-const val YANDEX_API_KEY = "X-Yandex-API-Key"
-const val KEY_EXTRA_LAT = "lat"
-const val KEY_EXTRA_LON = "lon"
 const val KEY_BUNDLE_SERVICE_BROADCAST_WEATHER = "weather_s_b"
 const val KEY_WEATHER_WAVE = "weather_wave"
-const val YANDEX_DOMAIN = "https://api.weather.yandex.ru/"
-const val YANDEX_ENDPOINT = "v2/informers?"
 
 class DetailsService(val name: String = "DetailService") : IntentService(name) {
     override fun onHandleIntent(intent: Intent?) {

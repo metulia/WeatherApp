@@ -11,6 +11,7 @@ import coil.load
 import com.example.weatherapp.R
 import com.example.weatherapp.data.repository.Weather
 import com.example.weatherapp.databinding.FragmentDetailsBinding
+import com.example.weatherapp.ui.extention.view.loadSvg
 import com.example.weatherapp.ui.extention.view.showSnackBar
 import com.google.android.material.snackbar.Snackbar
 
@@ -73,6 +74,7 @@ class DetailsFragment : Fragment() {
                     cityCoordinates.text =
                         "${weather.city.lat} ${weather.city.lon}"
                     headerIcon.load("https://freepngimg.com/thumb/city/36275-3-city-hd.png")
+                    weatherIcon.loadSvg("https://yastatic.net/weather/i/icons/blueye/color/svg/${weather.icon}.svg")
                     mainView.showSnackBar(getString(R.string.ok), Snackbar.LENGTH_LONG)
                 }
             }
@@ -82,6 +84,11 @@ class DetailsFragment : Fragment() {
     companion object {
 
         const val KEY_BUNDLE_WEATHER = "weather"
+        const val YANDEX_API_KEY = "X-Yandex-API-Key"
+        const val KEY_EXTRA_LAT = "lat"
+        const val KEY_EXTRA_LON = "lon"
+        const val YANDEX_DOMAIN = "https://api.weather.yandex.ru/"
+        const val YANDEX_ENDPOINT = "v2/informers?"
 
         @JvmStatic
         fun newInstance(bundle: Bundle): DetailsFragment {
