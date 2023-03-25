@@ -14,6 +14,7 @@ import com.example.weatherapp.databinding.FragmentDetailsBinding
 import com.example.weatherapp.ui.extention.view.loadSvg
 import com.example.weatherapp.ui.extention.view.showSnackBar
 import com.google.android.material.snackbar.Snackbar
+import com.squareup.picasso.Picasso
 
 class DetailsFragment : Fragment() {
 
@@ -73,7 +74,9 @@ class DetailsFragment : Fragment() {
                     feelsLikeValue.text = weather.feelsLike.toString()
                     cityCoordinates.text =
                         "${weather.city.lat} ${weather.city.lon}"
-                    headerIcon.load("https://freepngimg.com/thumb/city/36275-3-city-hd.png")
+                    //headerIcon.load("https://freepngimg.com/thumb/city/36275-3-city-hd.png") // coil
+                    Picasso.get().load("https://freepngimg.com/thumb/city/36275-3-city-hd.png")
+                        .into(headerIcon)
                     weatherIcon.loadSvg("https://yastatic.net/weather/i/icons/blueye/color/svg/${weather.icon}.svg")
                     mainView.showSnackBar(getString(R.string.ok), Snackbar.LENGTH_LONG)
                 }
