@@ -1,7 +1,6 @@
 package com.example.weatherapp.data.repository
 
 import android.util.Log
-import android.view.View
 import com.example.weatherapp.BuildConfig
 import com.example.weatherapp.data.weather_dto.Fact
 import com.example.weatherapp.data.weather_dto.WeatherDTO
@@ -17,7 +16,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 fun convertDtoToModel(weatherDTO: WeatherDTO): Weather {
     val fact: Fact = weatherDTO.fact
-    return Weather(getDefaultCity(), fact.temp, fact.feels_like)
+    return Weather(getDefaultCity(), fact.temp, fact.feels_like, fact.icon)
 }
 
 class DetailsRepositoryRetrofit2Impl : DetailsRepository {
@@ -32,7 +31,9 @@ class DetailsRepositoryRetrofit2Impl : DetailsRepository {
                 override fun onResponse(call: Call<WeatherDTO>, response: Response<WeatherDTO>) {
                     if (response.isSuccessful) {
                         response.body()?.let {
-                            callbackMy.onResponse(convertDtoToModel(it))
+                            val weather = convertDtoToModel(it)
+                            weather.city = city
+                            callbackMy.onResponse(weather)
                         }
                     }
                 }

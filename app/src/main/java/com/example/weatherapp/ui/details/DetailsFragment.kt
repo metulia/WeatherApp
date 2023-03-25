@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import coil.load
+import com.example.weatherapp.R
 import com.example.weatherapp.data.repository.Weather
 import com.example.weatherapp.databinding.FragmentDetailsBinding
 import com.example.weatherapp.ui.extention.view.showSnackBar
@@ -52,12 +54,15 @@ class DetailsFragment : Fragment() {
     fun renderData(detailsFragmentRequestResult: DetailsFragmentRequestResult) {
         when (detailsFragmentRequestResult) {
             is DetailsFragmentRequestResult.Error -> {
-                binding.loadingLayout.visibility =
-                    View.GONE
-                binding.mainView.showSnackBar("Не удалось загрузить данные", Snackbar.LENGTH_LONG)
+                binding.loadingLayout.visibility = View.GONE
+                binding.mainView.showSnackBar(
+                    getString(R.string.error), Snackbar.LENGTH_LONG
+                )
             }
-            is DetailsFragmentRequestResult.Loading -> binding.loadingLayout.visibility =
-                View.VISIBLE
+            is DetailsFragmentRequestResult.Loading -> {
+                binding.loadingLayout.visibility = View.VISIBLE
+                binding.mainView.showSnackBar(getString(R.string.load), Snackbar.LENGTH_LONG)
+            }
             is DetailsFragmentRequestResult.Success -> {
                 val weather = detailsFragmentRequestResult.weather
                 with(binding) {
@@ -67,7 +72,8 @@ class DetailsFragment : Fragment() {
                     feelsLikeValue.text = weather.feelsLike.toString()
                     cityCoordinates.text =
                         "${weather.city.lat} ${weather.city.lon}"
-                    mainView.showSnackBar("Получилось", Snackbar.LENGTH_LONG)
+                    headerIcon.load("https://freepngimg.com/thumb/city/36275-3-city-hd.png")
+                    mainView.showSnackBar(getString(R.string.ok), Snackbar.LENGTH_LONG)
                 }
             }
         }
