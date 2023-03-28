@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity() {
         when (item.itemId) {
             R.id.action_history -> {
                 supportFragmentManager.beginTransaction()
-                    .replace(R.id.container, WeatherHistoryListFragment.newInstance())
+                    .add(R.id.container, WeatherHistoryListFragment.newInstance())
                     .addToBackStack("").commit()
             }
         }
