@@ -17,6 +17,6 @@ interface WeatherHistoryDao {
     @Query("SELECT * FROM weather_history_table")
     fun getAll(): List<WeatherHistoryEntity>
 
-   /* @Query("SELECT * FROM weather_history_table WHERE city LIKE city")
-    fun getCityWeatherHistory(city: String): List<WeatherHistoryEntity>*/
+    @Query("SELECT * FROM weather_history_table WHERE city LIKE :city")
+    fun getCityWeatherHistory(city: String): List<WeatherHistoryEntity>
 }

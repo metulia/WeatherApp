@@ -4,13 +4,16 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.weatherapp.data.repository.City
 import com.example.weatherapp.data.repository.DetailsRepositoryRetrofit2Impl
+import com.example.weatherapp.data.repository.DetailsRepositoryRoomImpl
 import com.example.weatherapp.data.repository.Weather
-import com.example.weatherapp.domain.DetailsRepository
+import com.example.weatherapp.domain.DetailsRepositoryForOne
+import com.example.weatherapp.domain.room.DetailsRepositoryAdd
 
 open class DetailsViewModel
     (
     private val liveData: MutableLiveData<DetailsFragmentRequestResult> = MutableLiveData(),
-    private val repositoryImpl: DetailsRepository = DetailsRepositoryRetrofit2Impl()
+    private val repositoryImpl: DetailsRepositoryForOne = DetailsRepositoryRetrofit2Impl(),
+    private val repositoryAdd: DetailsRepositoryAdd = DetailsRepositoryRoomImpl()
 ) :
     ViewModel() {
     fun getLiveData() = liveData
@@ -22,6 +25,7 @@ open class DetailsViewModel
             object : Callback {
                 override fun onResponse(weather: Weather) {
                     liveData.postValue(DetailsFragmentRequestResult.Success(weather))
+                    repositoryAdd.addWeather(weather)
                 }
 
                 override fun onFail(error: Throwable) {
@@ -33,8 +37,7 @@ open class DetailsViewModel
     interface Callback {
         fun onResponse(weather: Weather) {
         }
-
-        fun onFail(error: Throwable)
+        fun onFail(error: Throwable) {
+        }
     }
-
 }
