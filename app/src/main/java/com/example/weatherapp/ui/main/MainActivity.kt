@@ -1,5 +1,6 @@
 package com.example.weatherapp.ui.main
 
+import android.content.Context
 import android.content.IntentFilter
 import android.os.Bundle
 import android.view.Menu
@@ -29,6 +30,13 @@ class MainActivity : AppCompatActivity() {
         registerReceiver(receiverAP, IntentFilter("android.intent.action.AIRPLANE_MODE"))
 
         MyApp.getWeatherHistoryDao().getAll()
+
+        val shP = getSharedPreferences(KEY_SHP_FILE_LIST_OF_CITIES, Context.MODE_PRIVATE)
+        val editor = shP.edit()
+        editor.putBoolean(KEY_SHP_FILE_LIST_OF_CITIES_KEY_IS_RUSSIAN, true).apply()
+
+        val defaultValueIsRussian = true
+        shP.getBoolean(KEY_SHP_FILE_LIST_OF_CITIES_KEY_IS_RUSSIAN, defaultValueIsRussian)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -50,5 +58,10 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         unregisterReceiver(receiverAP)
         super.onDestroy()
+    }
+
+    companion object {
+        const val KEY_SHP_FILE_LIST_OF_CITIES = "list_of_cities"
+        const val KEY_SHP_FILE_LIST_OF_CITIES_KEY_IS_RUSSIAN = "is_Russian"
     }
 }
