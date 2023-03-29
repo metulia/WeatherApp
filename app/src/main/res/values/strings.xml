@@ -6,9 +6,9 @@
     <string name="error">ERROR</string>
     <string name="load">LOADING</string>
     <string name="ok">OK!</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="https_geekbrains_ru">https://geekbrains.ru/</string>
-    <string name="ok_button">ok</string>
+    <string name="ok_button">OK</string>
     <string name="menu_title_history">Weather history</string>
+    <string name="menu_title_work_with_content_provider">Work with Content Provider</string>
 </resources>

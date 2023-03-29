@@ -4,5 +4,9 @@
     <item
         android:id="@+id/action_history"
         android:title="@string/menu_title_history"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_work_content_provider"
+        android:title="@string/menu_title_work_with_content_provider"
         app:showAsAction="always" />
 </menu>
