@@ -11,4 +11,8 @@
     <string name="ok_button">OK</string>
     <string name="menu_title_history">Weather history</string>
     <string name="menu_title_work_with_content_provider">Work with Content Provider</string>
+    <string name="alert_dialog_title_contacts_permission">Доступ к контактам</string>
+    <string name="alert_dialog_message_contacts_permission">Объяснение</string>
+    <string name="alert_dialog_positive_button_contacts_permission">Предоставить доступ</string>
+    <string name="alert_dialog_negative_button_contacts_permission">Не предоставлять доступ</string>
 </resources>
