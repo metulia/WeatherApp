@@ -1,11 +1,14 @@
 package com.example.weatherapp.ui.experiments
 
 import android.Manifest
+import android.content.ContentResolver
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.provider.ContactsContract
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -72,6 +75,7 @@ class WorkWithContentProviderFragment : Fragment() {
         )
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -91,7 +95,28 @@ class WorkWithContentProviderFragment : Fragment() {
     }
 
     private fun getContacts() {
-
+        val contentResolver: ContentResolver = requireContext().contentResolver
+        val cursor = contentResolver.query(
+            ContactsContract.Contacts.CONTENT_URI,
+            null,
+            null,
+            null,
+            ContactsContract.Contacts.DISPLAY_NAME + " ASC"
+        )
+        cursor?.let {
+            for (i in 0 until it.count) {
+                if (cursor.moveToPosition(i)) {
+                    val columnNameIndex =
+                        cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME)
+                    val name: String = cursor.getString(columnNameIndex)
+                    binding.containerForContacts.addView(TextView(requireContext()).apply {
+                        textSize = 30f
+                        text = name
+                    })
+                }
+            }
+        }
+        cursor?.close()
     }
 
     companion object {
