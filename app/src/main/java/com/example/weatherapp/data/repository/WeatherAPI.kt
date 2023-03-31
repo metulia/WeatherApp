@@ -1,6 +1,6 @@
 package com.example.weatherapp.data.repository
 
-import com.example.weatherapp.data.weather_dto.WeatherDTO
+import com.example.weatherapp.data.weatherdto.WeatherDTO
 import com.example.weatherapp.ui.details.DetailsFragment.Companion.KEY_EXTRA_LAT
 import com.example.weatherapp.ui.details.DetailsFragment.Companion.KEY_EXTRA_LON
 import com.example.weatherapp.ui.details.DetailsFragment.Companion.YANDEX_API_KEY

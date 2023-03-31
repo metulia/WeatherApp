@@ -15,4 +15,5 @@
     <string name="alert_dialog_message_contacts_permission">Объяснение</string>
     <string name="alert_dialog_positive_button_contacts_permission">Предоставить доступ</string>
     <string name="alert_dialog_negative_button_contacts_permission">Не предоставлять доступ</string>
+    <string name="authorities">weather_history_provider</string>
 </resources>
