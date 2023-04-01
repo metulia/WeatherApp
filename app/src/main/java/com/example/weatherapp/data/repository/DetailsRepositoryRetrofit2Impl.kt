@@ -2,9 +2,9 @@ package com.example.weatherapp.data.repository
 
 import android.util.Log
 import com.example.weatherapp.BuildConfig
-import com.example.weatherapp.data.weather_dto.Fact
-import com.example.weatherapp.data.weather_dto.WeatherDTO
-import com.example.weatherapp.domain.DetailsRepository
+import com.example.weatherapp.data.weatherdto.Fact
+import com.example.weatherapp.data.weatherdto.WeatherDTO
+import com.example.weatherapp.domain.DetailsRepositoryForOne
 import com.example.weatherapp.ui.details.DetailsFragment.Companion.YANDEX_DOMAIN
 import com.example.weatherapp.ui.details.DetailsViewModel
 import com.google.gson.GsonBuilder
@@ -19,7 +19,7 @@ fun convertDtoToModel(weatherDTO: WeatherDTO): Weather {
     return Weather(getDefaultCity(), fact.temp, fact.feels_like, fact.icon)
 }
 
-class DetailsRepositoryRetrofit2Impl : DetailsRepository {
+class DetailsRepositoryRetrofit2Impl : DetailsRepositoryForOne {
     override fun getWeatherDetails(city: City, callbackMy: DetailsViewModel.Callback) {
         val weatherAPI = Retrofit.Builder().apply {
             baseUrl(YANDEX_DOMAIN)

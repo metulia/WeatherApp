@@ -6,8 +6,14 @@
     <string name="error">ERROR</string>
     <string name="load">LOADING</string>
     <string name="ok">OK!</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="https_geekbrains_ru">https://geekbrains.ru/</string>
-    <string name="ok_button">ok</string>
+    <string name="ok_button">OK</string>
+    <string name="menu_title_history">Weather history</string>
+    <string name="menu_title_work_with_content_provider">Work with Content Provider</string>
+    <string name="alert_dialog_title_contacts_permission">Доступ к контактам</string>
+    <string name="alert_dialog_message_contacts_permission">Объяснение</string>
+    <string name="alert_dialog_positive_button_contacts_permission">Предоставить доступ</string>
+    <string name="alert_dialog_negative_button_contacts_permission">Не предоставлять доступ</string>
+    <string name="authorities">weather_history_provider</string>
 </resources>
