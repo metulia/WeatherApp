@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -13,13 +13,25 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/wl_location_floating_action_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_20_dp"
+        android:src="@android:drawable/ic_dialog_map"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/wl_floating_action_button"
+        app:maxImageSize="@dimen/max_image_size"
+        app:tint="@null"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/wl_floating_action_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/margin_20_dp"
         android:src="@drawable/ic_rus"
         app:maxImageSize="@dimen/max_image_size"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:tint="@null"/>
 
     <FrameLayout
@@ -28,6 +40,8 @@
         android:layout_height="match_parent"
         android:background="@color/white"
         android:visibility="gone"
+        tools:layout_editor_absoluteX="-186dp"
+        tools:layout_editor_absoluteY="-141dp"
         tools:visibility="visible">
 
         <ProgressBar
@@ -38,4 +52,4 @@
 
     </FrameLayout>
 
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -71,7 +71,7 @@ class WorkWithContentProviderFragment : Fragment() {
             arrayOf(
                 Manifest.permission.READ_CONTACTS
             ),
-            REQUEST_CODE
+            REQUEST_CODE_CONTACTS
         )
     }
 
@@ -81,7 +81,7 @@ class WorkWithContentProviderFragment : Fragment() {
         permissions: Array<out String>,
         grantResults: IntArray
     ) {
-        if (requestCode == REQUEST_CODE) {
+        if (requestCode == REQUEST_CODE_CONTACTS) {
             for (i in permissions.indices) {
                 if (permissions[i] == Manifest.permission.READ_CONTACTS && grantResults[i] == PackageManager.PERMISSION_GRANTED) {
                     getContacts()
@@ -121,7 +121,7 @@ class WorkWithContentProviderFragment : Fragment() {
 
     companion object {
 
-        const val REQUEST_CODE = 999
+        private const val REQUEST_CODE_CONTACTS = 999
 
         @JvmStatic
         fun newInstance() = WorkWithContentProviderFragment()
