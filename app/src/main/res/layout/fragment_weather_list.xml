@@ -21,7 +21,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/wl_floating_action_button"
         app:maxImageSize="@dimen/max_image_size"
-        app:tint="@null"/>
+        app:tint="@color/black"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/wl_floating_action_button"

@@ -55,11 +55,11 @@ class WorkWithContentProviderFragment : Fragment() {
     private fun explain() {
         AlertDialog.Builder(requireContext())
             .setTitle(R.string.alert_dialog_title_contacts_permission)
-            .setMessage(R.string.alert_dialog_message_contacts_permission)
-            .setPositiveButton(R.string.alert_dialog_positive_button_contacts_permission) { _, _ ->
+            .setMessage(R.string.dialog_rationale_message)
+            .setPositiveButton(R.string.dialog_rationale_give_access) { _, _ ->
                 mRequestPermission()
             }
-            .setNegativeButton(R.string.alert_dialog_negative_button_contacts_permission) { dialog, _ ->
+            .setNegativeButton(R.string.dialog_rationale_decline) { dialog, _ ->
                 dialog.dismiss()
             }
             .create()

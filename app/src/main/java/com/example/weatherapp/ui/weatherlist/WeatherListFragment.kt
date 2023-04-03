@@ -1,8 +1,15 @@
 package com.example.weatherapp.ui.weatherlist
 
 import android.Manifest
+import android.annotation.SuppressLint
+import android.content.Context
 import android.content.pm.PackageManager
+import android.location.Geocoder
+import android.location.Location
+import android.location.LocationListener
+import android.location.LocationManager
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,12 +18,12 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.weatherapp.R
+import com.example.weatherapp.data.repository.City
 import com.example.weatherapp.data.repository.Weather
 import com.example.weatherapp.databinding.FragmentWeatherListBinding
 import com.example.weatherapp.domain.OnItemListClickListener
 import com.example.weatherapp.ui.details.DetailsFragment
 import com.example.weatherapp.ui.details.DetailsFragment.Companion.KEY_BUNDLE_WEATHER
-import com.example.weatherapp.ui.experiments.WorkWithContentProviderFragment
 import com.example.weatherapp.ui.extention.view.showSnackBar
 import com.example.weatherapp.ui.main.MainViewModel
 import com.google.android.material.snackbar.Snackbar
@@ -105,8 +112,68 @@ class WeatherListFragment : Fragment(), OnItemListClickListener {
         }
     }
 
+    private fun getAddressByLocation(location: Location) {
+        val geocoder = Geocoder(requireContext())
+        val timeStump = System.currentTimeMillis()
+        Thread {
+            val addressText =
+                geocoder.getFromLocation(location.latitude, location.longitude, 3)?.get(0)
+                    ?.getAddressLine(0)
+            if (addressText != null) {
+                requireActivity().runOnUiThread {
+                    showAddressDialog(addressText, location)
+                }
+            }
+        }.start()
+    }
+
+    private val locationListenerTime = object : LocationListener {
+        override fun onLocationChanged(location: Location) {
+            Log.d("@@@", location.toString())
+            getAddressByLocation(location)
+        }
+
+        override fun onProviderDisabled(provider: String) {
+            super.onProviderDisabled(provider)
+        }
+
+        override fun onProviderEnabled(provider: String) {
+            super.onProviderEnabled(provider)
+        }
+    }
+
+    private val locationListenerDistance = object : LocationListener {
+        override fun onLocationChanged(location: Location) {
+            Log.d("@@@", location.toString())
+            getAddressByLocation(location)
+        }
+    }
+
+    @SuppressLint("MissingPermission")
     private fun getLocation() {
-        TODO("Not yet implemented")
+        context?.let {
+            val locationManager = it.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+            if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                val providerGPS =
+                    locationManager.getProvider(LocationManager.GPS_PROVIDER) // можно использовать BestProvider
+                /*providerGPS?.let {
+                    locationManager.requestLocationUpdates(
+                        LocationManager.GPS_PROVIDER,
+                        10000L,
+                        0f,
+                        locationListenerTime
+                    )
+                }*/
+                providerGPS?.let {
+                    locationManager.requestLocationUpdates(
+                        LocationManager.GPS_PROVIDER,
+                        0,
+                        100f,
+                        locationListenerDistance
+                    )
+                }
+            }
+        }
     }
 
     private fun explain() {
@@ -130,6 +197,49 @@ class WeatherListFragment : Fragment(), OnItemListClickListener {
             ),
             REQUEST_CODE_LOCATION
         )
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        if (requestCode == REQUEST_CODE_LOCATION) {
+            for (i in permissions.indices) {
+                if (permissions[i] == Manifest.permission.ACCESS_FINE_LOCATION && grantResults[i] == PackageManager.PERMISSION_GRANTED) {
+                    getLocation()
+                } else {
+                    explain()
+                }
+            }
+        } else {
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        }
+    }
+
+    private fun showAddressDialog(address: String, location: Location) {
+        activity?.let {
+            AlertDialog.Builder(it)
+                .setTitle(getString(R.string.dialog_address_title))
+                .setMessage(address)
+                .setPositiveButton(getString(R.string.dialog_address_get_weather)) { _, _ ->
+                    onItemClick(
+                        Weather(
+                            City(
+                                address,
+                                location.latitude,
+                                location.longitude
+                            )
+                        )
+                    )
+                }
+                .setNegativeButton(getString(R.string.dialog_button_close)) { dialog,
+                                                                              _ ->
+                    dialog.dismiss()
+                }
+                .create().show()
+        }
     }
 
     private fun renderData(data: WeatherListFragmentRequestResult) {
