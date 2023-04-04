@@ -27,6 +27,7 @@ import com.example.weatherapp.ui.details.DetailsFragment.Companion.KEY_BUNDLE_WE
 import com.example.weatherapp.ui.extention.view.showSnackBar
 import com.example.weatherapp.ui.main.MainViewModel
 import com.google.android.material.snackbar.Snackbar
+import java.util.*
 
 class WeatherListFragment : Fragment(), OnItemListClickListener {
 
@@ -114,6 +115,7 @@ class WeatherListFragment : Fragment(), OnItemListClickListener {
 
     private fun getAddressByLocation(location: Location) {
         val geocoder = Geocoder(requireContext())
+        //val geocoder = Geocoder(requireContext(), Locale.getDefault())
         val timeStump = System.currentTimeMillis()
         Thread {
             val addressText =

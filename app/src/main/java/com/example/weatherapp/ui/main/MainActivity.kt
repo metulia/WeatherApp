@@ -10,6 +10,7 @@ import com.example.weatherapp.MyApp
 import com.example.weatherapp.R
 import com.example.weatherapp.ui.experiments.APBroadcastReceiver
 import com.example.weatherapp.ui.experiments.WorkWithContentProviderFragment
+import com.example.weatherapp.ui.googlemaps.MapsFragment
 import com.example.weatherapp.ui.weatherhistorylist.WeatherHistoryListFragment
 import com.example.weatherapp.ui.weatherlist.WeatherListFragment
 
@@ -55,6 +56,11 @@ class MainActivity : AppCompatActivity() {
             R.id.action_work_content_provider -> {
                 supportFragmentManager.beginTransaction()
                     .add(R.id.container, WorkWithContentProviderFragment.newInstance())
+                    .addToBackStack("").commit()
+            }
+            R.id.action_google_maps -> {
+                supportFragmentManager.beginTransaction()
+                    .add(R.id.container, MapsFragment())
                     .addToBackStack("").commit()
             }
         }
