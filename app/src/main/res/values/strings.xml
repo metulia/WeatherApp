@@ -30,5 +30,8 @@
     <string name="default_address">Enter address</string>
     <string name="button_search_map">Search</string>
     <string name="marker_start">Start</string>
-
+    <string name="notification_low_title">TITLE_LOW</string>
+    <string name="notification_low_text">TEXT_LOW</string>
+    <string name="notification_high_title">TITLE_HIGH</string>
+    <string name="notification_high_text">TEXT_HIGH</string>
 </resources>
