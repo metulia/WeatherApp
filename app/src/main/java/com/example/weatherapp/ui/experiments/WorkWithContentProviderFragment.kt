@@ -55,11 +55,11 @@ class WorkWithContentProviderFragment : Fragment() {
     private fun explain() {
         AlertDialog.Builder(requireContext())
             .setTitle(R.string.alert_dialog_title_contacts_permission)
-            .setMessage(R.string.alert_dialog_message_contacts_permission)
-            .setPositiveButton(R.string.alert_dialog_positive_button_contacts_permission) { _, _ ->
+            .setMessage(R.string.dialog_rationale_message)
+            .setPositiveButton(R.string.dialog_rationale_give_access) { _, _ ->
                 mRequestPermission()
             }
-            .setNegativeButton(R.string.alert_dialog_negative_button_contacts_permission) { dialog, _ ->
+            .setNegativeButton(R.string.dialog_rationale_decline) { dialog, _ ->
                 dialog.dismiss()
             }
             .create()
@@ -71,7 +71,7 @@ class WorkWithContentProviderFragment : Fragment() {
             arrayOf(
                 Manifest.permission.READ_CONTACTS
             ),
-            REQUEST_CODE
+            REQUEST_CODE_CONTACTS
         )
     }
 
@@ -81,7 +81,7 @@ class WorkWithContentProviderFragment : Fragment() {
         permissions: Array<out String>,
         grantResults: IntArray
     ) {
-        if (requestCode == REQUEST_CODE) {
+        if (requestCode == REQUEST_CODE_CONTACTS) {
             for (i in permissions.indices) {
                 if (permissions[i] == Manifest.permission.READ_CONTACTS && grantResults[i] == PackageManager.PERMISSION_GRANTED) {
                     getContacts()
@@ -121,7 +121,7 @@ class WorkWithContentProviderFragment : Fragment() {
 
     companion object {
 
-        const val REQUEST_CODE = 999
+        private const val REQUEST_CODE_CONTACTS = 999
 
         @JvmStatic
         fun newInstance() = WorkWithContentProviderFragment()
