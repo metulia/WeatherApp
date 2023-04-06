@@ -31,7 +31,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
         val notificationBuilderHigh =
-            NotificationCompat.Builder(this, CHANNEL_ID_HIGH).apply {
+            NotificationCompat.Builder(applicationContext, CHANNEL_ID_HIGH).apply {
                 setSmallIcon(R.drawable.ic_rus)
                 setContentTitle(title)
                 setContentText(message)
@@ -50,6 +50,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                 ).apply {
                     description = channelDescriptionHigh
                 }
+
             notificationManager.createNotificationChannel(channelHigh)
         }
 
