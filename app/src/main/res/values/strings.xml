@@ -24,11 +24,13 @@
     <string name="dialog_rationale_message">Объяснение</string>
     <string name="dialog_rationale_give_access">Предоставить доступ</string>
     <string name="dialog_rationale_decline">Не предоставлять доступ</string>
+
     <string name="dialog_address_title">Ваш адрес</string>
     <string name="dialog_address_get_weather">Узнать погоду</string>
     <string name="google_maps">GoogleMaps</string>
     <string name="default_address">Enter address</string>
     <string name="button_search_map">Search</string>
     <string name="marker_start">Start</string>
-
+    <string name="notification_high_title">TITLE_HIGH</string>
+    <string name="notification_high_text">TEXT_HIGH</string>
 </resources>

@@ -3,6 +3,7 @@ package com.example.weatherapp.ui.main
 import android.content.Context
 import android.content.IntentFilter
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
@@ -13,6 +14,8 @@ import com.example.weatherapp.ui.experiments.WorkWithContentProviderFragment
 import com.example.weatherapp.ui.googlemaps.MapsFragment
 import com.example.weatherapp.ui.weatherhistorylist.WeatherHistoryListFragment
 import com.example.weatherapp.ui.weatherlist.WeatherListFragment
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.messaging.FirebaseMessaging
 
 class MainActivity : AppCompatActivity() {
 
@@ -39,6 +42,15 @@ class MainActivity : AppCompatActivity() {
 
         val defaultValueIsRussian = true
         shP.getBoolean(KEY_SHP_FILE_LIST_OF_CITIES_KEY_IS_RUSSIAN, defaultValueIsRussian)
+
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.w("my_logs_push", "Fetching FCM registration token failed", task.exception)
+                return@OnCompleteListener
+            }
+            val token = task.result
+            Log.d("my_logs_push", "$token")
+        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
