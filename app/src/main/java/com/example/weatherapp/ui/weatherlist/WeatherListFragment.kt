@@ -115,7 +115,6 @@ class WeatherListFragment : Fragment(), OnItemListClickListener {
 
     private fun getAddressByLocation(location: Location) {
         val geocoder = Geocoder(requireContext())
-        //val geocoder = Geocoder(requireContext(), Locale.getDefault())
         val timeStump = System.currentTimeMillis()
         Thread {
             val addressText =
@@ -127,21 +126,6 @@ class WeatherListFragment : Fragment(), OnItemListClickListener {
                 }
             }
         }.start()
-    }
-
-    private val locationListenerTime = object : LocationListener {
-        override fun onLocationChanged(location: Location) {
-            Log.d("@@@", location.toString())
-            getAddressByLocation(location)
-        }
-
-        override fun onProviderDisabled(provider: String) {
-            super.onProviderDisabled(provider)
-        }
-
-        override fun onProviderEnabled(provider: String) {
-            super.onProviderEnabled(provider)
-        }
     }
 
     private val locationListenerDistance = object : LocationListener {
@@ -158,14 +142,6 @@ class WeatherListFragment : Fragment(), OnItemListClickListener {
             if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
                 val providerGPS =
                     locationManager.getProvider(LocationManager.GPS_PROVIDER) // можно использовать BestProvider
-                /*providerGPS?.let {
-                    locationManager.requestLocationUpdates(
-                        LocationManager.GPS_PROVIDER,
-                        10000L,
-                        0f,
-                        locationListenerTime
-                    )
-                }*/
                 providerGPS?.let {
                     locationManager.requestLocationUpdates(
                         LocationManager.GPS_PROVIDER,

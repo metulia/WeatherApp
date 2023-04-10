@@ -33,4 +33,5 @@
     <string name="marker_start">Start</string>
     <string name="notification_high_title">TITLE_HIGH</string>
     <string name="notification_high_text">TEXT_HIGH</string>
+    <string name="google_map_marker_title">Marker in Saint-Petersburg</string>
 </resources>
