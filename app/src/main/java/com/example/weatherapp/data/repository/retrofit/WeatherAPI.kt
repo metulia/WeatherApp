@@ -1,4 +1,4 @@
-package com.example.weatherapp.data.repository
+package com.example.weatherapp.data.repository.retrofit
 
 import com.example.weatherapp.data.weatherdto.WeatherDTO
 import com.example.weatherapp.ui.details.DetailsFragment.Companion.KEY_EXTRA_LAT

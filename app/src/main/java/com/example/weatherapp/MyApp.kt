@@ -2,8 +2,8 @@ package com.example.weatherapp
 
 import android.app.Application
 import androidx.room.Room
-import com.example.weatherapp.domain.room.MyDataBase
-import com.example.weatherapp.domain.room.WeatherHistoryDao
+import com.example.weatherapp.data.repository.room.MyDataBase
+import com.example.weatherapp.data.repository.room.WeatherHistoryDao
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.internal.synchronized
 

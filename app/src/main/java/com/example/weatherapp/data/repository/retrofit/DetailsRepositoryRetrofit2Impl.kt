@@ -1,7 +1,10 @@
-package com.example.weatherapp.data.repository
+package com.example.weatherapp.data.repository.retrofit
 
 import android.util.Log
 import com.example.weatherapp.BuildConfig
+import com.example.weatherapp.data.repository.City
+import com.example.weatherapp.data.repository.Weather
+import com.example.weatherapp.data.repository.getDefaultCity
 import com.example.weatherapp.data.weatherdto.Fact
 import com.example.weatherapp.data.weatherdto.WeatherDTO
 import com.example.weatherapp.domain.DetailsRepositoryForOne

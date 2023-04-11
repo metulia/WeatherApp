@@ -58,12 +58,12 @@ class DetailsFragment : Fragment() {
             is DetailsFragmentRequestResult.Error -> {
                 binding.loadingLayout.visibility = View.GONE
                 binding.mainView.showSnackBar(
-                    getString(R.string.error), Snackbar.LENGTH_LONG
+                    resources.getString(R.string.error), Snackbar.LENGTH_LONG
                 )
             }
             is DetailsFragmentRequestResult.Loading -> {
                 binding.loadingLayout.visibility = View.VISIBLE
-                binding.mainView.showSnackBar(getString(R.string.load), Snackbar.LENGTH_LONG)
+                binding.mainView.showSnackBar(resources.getString(R.string.load), Snackbar.LENGTH_LONG)
             }
             is DetailsFragmentRequestResult.Success -> {
                 val weather = detailsFragmentRequestResult.weather
@@ -78,7 +78,7 @@ class DetailsFragment : Fragment() {
                     Picasso.get().load("https://freepngimg.com/thumb/city/36275-3-city-hd.png")
                         .into(headerIcon)
                     weatherIcon.loadSvg("https://yastatic.net/weather/i/icons/blueye/color/svg/${weather.icon}.svg")
-                    mainView.showSnackBar(getString(R.string.ok), Snackbar.LENGTH_LONG)
+                    mainView.showSnackBar(resources.getString(R.string.ok), Snackbar.LENGTH_LONG)
                 }
             }
         }
