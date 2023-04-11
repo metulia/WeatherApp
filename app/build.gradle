@@ -25,7 +25,7 @@ android {
     buildTypes.each {
         Properties properties = new Properties()
         properties.load(project.rootProject.file("password.properties").newDataInputStream())
-        def password = properties.getProperty("password", "")
+        def password = properties.getProperty("app_password", "")
     }
 
     signingConfigs {
@@ -51,7 +51,7 @@ android {
     buildTypes {
         release {
             signingConfig signingConfigs.myRelease
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             buildConfigField "String", "TYPE", '"RELEASE"'
         }
