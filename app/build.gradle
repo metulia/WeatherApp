@@ -22,6 +22,22 @@ android {
         it.buildConfigField "String", "WEATHER_API_KEY", apiKey
     }
 
+    buildTypes.each {
+        Properties properties = new Properties()
+        properties.load(project.rootProject.file("password.properties").newDataInputStream())
+        def password = properties.getProperty("password", "")
+    }
+
+    signingConfigs {
+        myRelease {
+            storeFile file("keystore.jks")
+            storePassword = "password"
+            keyAlias "key0"
+            keyPassword = "password"
+        }
+    }
+
+
     defaultConfig {
         applicationId "com.example.weatherapp"
         minSdk 24
@@ -34,8 +50,10 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled true
+            signingConfig signingConfigs.myRelease
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "TYPE", '"RELEASE"'
         }
     }
     compileOptions {
@@ -49,9 +67,11 @@ android {
     productFlavors {
         free_weather {
             dimension 'version'
+            versionNameSuffix '.free'
         }
         paid_weather {
             dimension 'version'
+            versionNameSuffix '.paid'
         }
     }
 }
