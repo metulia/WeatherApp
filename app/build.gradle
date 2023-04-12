@@ -23,20 +23,20 @@ android {
     }
 
     buildTypes.each {
-        Properties properties = new Properties()
-        properties.load(project.rootProject.file("password.properties").newDataInputStream())
-        def password = properties.getProperty("app_password", "")
+        Properties props = new Properties()
+        props.load(project.rootProject.file("password.properties").newDataInputStream())
+        def password = props.getProperty("app_password")
+        it.buildConfigField "String", "STORE_KEY", password
     }
 
     signingConfigs {
         myRelease {
             storeFile file("keystore.jks")
-            storePassword = "password"
-            keyAlias "key0"
-            keyPassword = "password"
+            storePassword = "STORE_KEY"
+            keyAlias = "key0"
+            keyPassword = "STORE_KEY"
         }
     }
-
 
     defaultConfig {
         applicationId "com.example.weatherapp"
