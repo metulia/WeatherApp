@@ -1,10 +1,10 @@
 package com.example.weatherapp.data.repository
 
 import com.example.weatherapp.MyApp
+import com.example.weatherapp.data.repository.room.DetailsRepositoryAdd
+import com.example.weatherapp.data.repository.room.WeatherHistoryEntity
 import com.example.weatherapp.domain.DetailsRepositoryForAll
 import com.example.weatherapp.domain.DetailsRepositoryForOne
-import com.example.weatherapp.domain.room.DetailsRepositoryAdd
-import com.example.weatherapp.domain.room.WeatherHistoryEntity
 import com.example.weatherapp.ui.details.DetailsViewModel
 import com.example.weatherapp.ui.weatherhistorylist.WeatherHistoryViewModel
 

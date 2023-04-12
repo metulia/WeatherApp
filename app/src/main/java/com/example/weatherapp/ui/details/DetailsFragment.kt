@@ -1,5 +1,6 @@
 package com.example.weatherapp.ui.details
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,7 +8,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import coil.load
 import com.example.weatherapp.R
 import com.example.weatherapp.data.repository.Weather
 import com.example.weatherapp.databinding.FragmentDetailsBinding
@@ -48,8 +48,14 @@ class DetailsFragment : Fragment() {
                 }
             })
 
-        arguments?.getParcelable<Weather>(KEY_BUNDLE_WEATHER)?.let {
-            viewModel.getWeather(it.city)
+        if (Build.VERSION.SDK_INT >= 33) {
+            arguments?.getParcelable(KEY_BUNDLE_WEATHER, Weather::class.java)?.let {
+                viewModel.getWeather(it.city)
+            }
+        } else {
+            arguments?.getParcelable<Weather>(KEY_BUNDLE_WEATHER)?.let {
+                viewModel.getWeather(it.city)
+            }
         }
     }
 
@@ -58,12 +64,15 @@ class DetailsFragment : Fragment() {
             is DetailsFragmentRequestResult.Error -> {
                 binding.loadingLayout.visibility = View.GONE
                 binding.mainView.showSnackBar(
-                    getString(R.string.error), Snackbar.LENGTH_LONG
+                    resources.getString(R.string.error), Snackbar.LENGTH_LONG
                 )
             }
             is DetailsFragmentRequestResult.Loading -> {
                 binding.loadingLayout.visibility = View.VISIBLE
-                binding.mainView.showSnackBar(getString(R.string.load), Snackbar.LENGTH_LONG)
+                binding.mainView.showSnackBar(
+                    resources.getString(R.string.load),
+                    Snackbar.LENGTH_LONG
+                )
             }
             is DetailsFragmentRequestResult.Success -> {
                 val weather = detailsFragmentRequestResult.weather
@@ -78,7 +87,7 @@ class DetailsFragment : Fragment() {
                     Picasso.get().load("https://freepngimg.com/thumb/city/36275-3-city-hd.png")
                         .into(headerIcon)
                     weatherIcon.loadSvg("https://yastatic.net/weather/i/icons/blueye/color/svg/${weather.icon}.svg")
-                    mainView.showSnackBar(getString(R.string.ok), Snackbar.LENGTH_LONG)
+                    mainView.showSnackBar(resources.getString(R.string.ok), Snackbar.LENGTH_LONG)
                 }
             }
         }

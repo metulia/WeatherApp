@@ -8,7 +8,7 @@ import android.database.Cursor
 import android.net.Uri
 import com.example.weatherapp.MyApp
 import com.example.weatherapp.R
-import com.example.weatherapp.domain.room.*
+import com.example.weatherapp.data.repository.room.*
 
 private const val URI_ALL = 1 // URI для всех записей
 private const val URI_ID = 2 // URI для конкретной записи

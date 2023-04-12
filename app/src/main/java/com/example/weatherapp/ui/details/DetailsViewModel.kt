@@ -3,11 +3,11 @@ package com.example.weatherapp.ui.details
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.weatherapp.data.repository.City
-import com.example.weatherapp.data.repository.DetailsRepositoryRetrofit2Impl
 import com.example.weatherapp.data.repository.DetailsRepositoryRoomImpl
 import com.example.weatherapp.data.repository.Weather
+import com.example.weatherapp.data.repository.retrofit.DetailsRepositoryRetrofit2Impl
+import com.example.weatherapp.data.repository.room.DetailsRepositoryAdd
 import com.example.weatherapp.domain.DetailsRepositoryForOne
-import com.example.weatherapp.domain.room.DetailsRepositoryAdd
 
 open class DetailsViewModel
     (
